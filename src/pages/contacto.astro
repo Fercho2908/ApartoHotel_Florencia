@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import Reveal from '../components/Reveal.astro';
+import ContactMap from '../components/ContactMap.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../data/site';
+
+const contactCards = [
+  {
+    icon: 'MapPin',
+    title: 'Ubicación',
+    lines: [SITE.addressShort],
+    href: SITE.mapsUrl,
+    hrefLabel: 'Ver en Google Maps',
+  },
+  {
+    icon: 'Phone',
+    title: 'Teléfono y WhatsApp',
+    lines: [SITE.phoneDisplay],
+    href: `tel:${SITE.phoneTel}`,
+    hrefLabel: 'Llamar ahora',
+    wa: true,
+  },
+  {
+    icon: 'Mail',
+    title: 'Correo electrónico',
+    lines: [SITE.emails.reservas, SITE.emails.general],
+    href: `mailto:${SITE.emails.reservas}`,
+    hrefLabel: 'Escribir correo',
+  },
+  {
+    icon: 'Instagram',
+    title: 'Instagram',
+    lines: ['@apartohotelflorencia'],
+    href: SITE.social.instagram,
+    hrefLabel: 'Seguir en Instagram',
+    external: true,
+  },
+  {
+    icon: 'Facebook',
+    title: 'Facebook',
+    lines: ['Aparto-Hotel Florencia'],
+    href: SITE.social.facebook,
+    hrefLabel: 'Visitar Facebook',
+    external: true,
+  },
+];
+---
+
+<Base
+  title="Contacto y Ubicación"
+  description="Contacte al Aparto-Hotel Florencia en Güiria, Estado Sucre: teléfono +58 414-3942088, WhatsApp, correo y mapa de ubicación en Calle Bolívar."
+  canonicalPath="/contacto/"
+  crumbs={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Contacto y Ubicación' },
+  ]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Contacto &amp; Ubicación</span>
+      <h1>Estamos en el centro de Güiria</h1>
+      <p>
+        Calle Bolívar s/n, frente a Calle El Consejo. Contáctenos por teléfono,
+        WhatsApp o el formulario de cotización.
+      </p>
+    </div>
+  </section>
+
+  <Reveal>
+    <section class="section">
+      <div class="container">
+        <div class="contact-cards">
+          {
+            contactCards.map((c) => (
+              <a
+                class="contact-card"
+                href={c.href}
+                target={c.wa || c.external ? '_blank' : undefined}
+                rel={c.wa || c.external ? 'noopener' : undefined}
+              >
+                <Icon name={c.icon} size={28} label={c.title} />
+                <h2>{c.title}</h2>
+                {
+                  c.lines.map((l) => (
+                    <p>{l}</p>
+                  ))
+                }
+                <span class="contact-link">{c.hrefLabel}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-map">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Ubicación</span>
+          <h2>Cómo llegar</h2>
+          <p>Frente a Calle El Consejo, a minutos de los puntos de operación corporativos de Güiria.</p>
+        </div>
+        <ContactMap />
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-form" id="cotizacion">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Cotización</span>
+          <h2>Envíenos su solicitud por WhatsApp</h2>
+          <p>Complete el formulario y arme su mensaje de cotización en un clic.</p>
+        </div>
+        <QuoteForm formId="contacto" />
+      </div>
+    </section>
+  </Reveal>
+</Base>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl);
+    background: linear-gradient(to bottom, oklch(0.97 0.012 80), oklch(0.965 0.01 80)),
+      var(--color-surface);
+  }
+
+  .page-hero h1 {
+    font-size: var(--step-4);
+    max-width: 20ch;
+    margin-top: var(--space-md);
+  }
+
+  .page-hero p {
+    margin-top: var(--space-lg);
+    font-size: var(--text-lg);
+    color: var(--color-text-soft);
+    max-width: 56ch;
+  }
+
+  .contact-cards {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .contact-card {
+    display: grid;
+    gap: var(--space-xs);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-strong);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo),
+      border-color 0.2s var(--ease-out-expo);
+  }
+
+  .contact-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  .contact-card svg {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact-card h2 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .contact-card p {
+    color: var(--color-text-soft);
+    font-size: var(--text-base);
+    margin: 0;
+  }
+
+  .contact-link {
+    margin-top: var(--space-sm);
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .section-map {
+    background: var(--color-surface-strong);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .section-form {
+    background: var(--color-surface);
+  }
+</style>

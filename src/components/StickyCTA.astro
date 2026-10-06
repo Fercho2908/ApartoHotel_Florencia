@@ -1,0 +1,216 @@
+---
+import { SITE } from '../data/site';
+import Icon from './Icon.astro';
+
+const contacts = [
+  {
+    name: 'WhatsApp',
+    icon: 'MessageCircle',
+    href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, estoy interesado en una estadía en Aparto-Hotel Florencia.')}`,
+    color: '#25d366',
+    textColor: '#062b14',
+    external: true,
+  },
+  {
+    name: 'Llamar',
+    icon: 'Phone',
+    href: `tel:${SITE.phoneTel}`,
+    color: '#0284c7',
+    textColor: '#ffffff',
+    external: false,
+  },
+  {
+    name: 'Correo',
+    icon: 'Mail',
+    href: `mailto:${SITE.emails.reservas}`,
+    color: '#4f46e5',
+    textColor: '#ffffff',
+    external: false,
+  },
+];
+---
+
+<div class="contact-fab-container" id="contact-fab-menu">
+  <div class="contact-options" aria-hidden="true">
+    {
+      contacts.map((c) => (
+        <a
+          href={c.href}
+          class="contact-option-btn"
+          style={`--option-bg: ${c.color}; --option-color: ${c.textColor};`}
+          target={c.external ? '_blank' : '_self'}
+          rel={c.external ? 'noopener noreferrer' : undefined}
+          aria-label={c.name}
+          title={c.name}
+        >
+          <Icon name={c.icon} size={20} label={c.name} />
+          <span class="contact-tooltip">{c.name}</span>
+        </a>
+      ))
+    }
+  </div>
+
+  <button
+    type="button"
+    class="fab-toggle"
+    aria-expanded="false"
+    aria-label="Abrir opciones de contacto"
+  >
+    <span class="fab-icon-open">
+      <Icon name="MessageCircle" size={28} label="Contacto" />
+    </span>
+    <span class="fab-icon-close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  const container = document.getElementById('contact-fab-menu');
+  if (container) {
+    const toggleBtn = container.querySelector('.fab-toggle');
+    const optionsWrapper = container.querySelector('.contact-options');
+
+    if (toggleBtn && optionsWrapper) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = container.classList.toggle('is-open');
+        toggleBtn.setAttribute('aria-expanded', isOpen.toString());
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target as Node)) {
+          container.classList.remove('is-open');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  .contact-fab-container {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: var(--z-sticky-cta);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .fab-toggle {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #062b14;
+    box-shadow: 0 8px 24px oklch(0.28 0.008 50 / 0.28);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo), background-color 0.2s;
+  }
+
+  .fab-toggle:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 12px 32px oklch(0.28 0.008 50 / 0.32);
+  }
+
+  .fab-toggle:active {
+    transform: scale(0.96);
+  }
+
+  .fab-icon-close {
+    display: none;
+  }
+
+  .contact-fab-container.is-open .fab-icon-open {
+    display: none;
+  }
+
+  .contact-fab-container.is-open .fab-icon-close {
+    display: grid;
+  }
+
+  .contact-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact-fab-container.is-open .contact-options {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .contact-option-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--option-bg);
+    color: var(--option-color);
+    box-shadow: 0 4px 12px oklch(0.28 0.008 50 / 0.2);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-option-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px oklch(0.28 0.008 50 / 0.25);
+  }
+
+  .contact-tooltip {
+    position: absolute;
+    right: 56px;
+    background: var(--color-surface, #ffffff);
+    color: var(--color-text, #111827);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .contact-option-btn:hover .contact-tooltip {
+    opacity: 1;
+  }
+
+  /* Reserve space so footer content isn't hidden behind the FAB */
+  @media (max-width: 1024px) {
+    :global(body) {
+      padding-bottom: 40px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(body) {
+      padding-bottom: 88px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fab-toggle,
+    .contact-options,
+    .contact-option-btn {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

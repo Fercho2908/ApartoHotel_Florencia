@@ -1,0 +1,78 @@
+---
+import { SITE } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  crumbs?: { label: string; href?: string }[];
+  jsonLd?: string[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  ogImage = '/hotel_1.webp',
+  crumbs,
+  jsonLd = [],
+} = Astro.props;
+
+const canonical = new URL(canonicalPath, Astro.site!).toString();
+const fullTitle = canonicalPath === '/' ? title : `${title} · ${SITE.name}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:image" content={new URL(ogImage, Astro.site!).toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <meta name="theme-color" content="#B85014" />
+
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <style is:global>
+      body {
+        padding-bottom: 0;
+      }
+      @media (min-width: 768px) {
+        body.transition-locked {
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+    <Header />
+    {crumbs && crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <StickyCTA />
+  </body>
+</html>

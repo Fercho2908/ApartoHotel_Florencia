@@ -1,0 +1,554 @@
+---
+import Base from '../layouts/Base.astro';
+import Reveal from '../components/Reveal.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE, whatsappLink } from '../data/site';
+import { getImage } from 'astro:assets';
+import imgHotel1 from '../assets/hotel_1.webp';
+import imgHotel2 from '../assets/hotel_2.webp';
+import imgHab1 from '../assets/hotel_habitacion_1.webp';
+import imgHab2 from '../assets/hotel_habitacion_2.webp';
+import imgCocina from '../assets/hotel_cocina_1.webp';
+import imgSalon from '../assets/hotel_salon.webp';
+
+const heroImg = await getImage({ src: imgHotel1, widths: [800, 1200, 1600], formats: ['webp'] });
+const hotel2Img = await getImage({ src: imgHotel2, widths: [600, 1000], formats: ['webp'] });
+const hab1Img = await getImage({ src: imgHab1, widths: [400, 700], formats: ['webp'] });
+const hab2Img = await getImage({ src: imgHab2, widths: [400, 700], formats: ['webp'] });
+const cocinaImg = await getImage({ src: imgCocina, widths: [400, 700], formats: ['webp'] });
+const salonImg = await getImage({ src: imgSalon, widths: [600, 1000], formats: ['webp'] });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    name: SITE.name,
+    description: 'Servicio de alojamiento en Güiria, Estado Sucre, Venezuela. Apartamentos equipados para hasta 4 personas con salón de reuniones y seguridad 24/7.',
+    url: SITE.url,
+    telephone: SITE.phoneTel,
+    email: SITE.emails.reservas,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Calle Bolívar s/n frente a Calle El Consejo',
+      addressLocality: 'Güiria',
+      addressRegion: 'Estado Sucre',
+      addressCountry: 'VE',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '10.5748',
+      longitude: '-62.2847',
+    },
+    numberOfRooms: '2',
+    maximumAttendeeCapacity: 50,
+  },
+];
+---
+
+<Base
+  title="Servicio de Alojamiento en Güiria"
+  description="Aparto-Hotel Florencia: servicio de alojamiento en Güiria, Estado Sucre. Apartamentos equipados, salón de reuniones para 50 personas, seguridad 24/7 y tarifas preferenciales para empresas."
+  canonicalPath="/"
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <picture>
+        <source srcset={heroImg.attributes.srcset} sizes="100vw" />
+        <img
+          src={heroImg.src}
+          width={heroImg.attributes.width}
+          height={heroImg.attributes.height}
+          alt="Fachada frontal de Aparto-Hotel Florencia en Calle Bolívar s/n, Güiria, Estado Sucre"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </picture>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-content">
+      <span class="eyebrow eyebrow-light" id="hero-eyebrow">Alojamiento · Güiria, Sucre</span>
+      <h1>
+        <strong>Aparto-Hotel Florencia</strong>
+      </h1>
+      <div id="hero-messages">
+        <div class="hero-msg" data-msg="1" style="display: block;">
+          <p class="hero-sub">
+            Soluciones de alojamiento corporativo.<br />
+            Espacios equipados para brindar comodidad, seguridad y eficiencia en cada estadía.
+          </p>
+        </div>
+        <div class="hero-msg" data-msg="2" style="display: none;">
+          <p class="hero-sub">
+            Bienestar y comodidad para tu estancia en familia.<br />
+            Apartamentos diseñados para ofrecer descanso, tranquilidad y funcionalidad.
+          </p>
+        </div>
+      </div>
+      <div class="hero-ctas">
+        <a
+          class="btn btn-primary btn-hero"
+          href={whatsappLink(
+            `Hola, estoy interesado en una cotización para una estadía en Aparto-Hotel Florencia.\n\nDuración estimada: (indicar noches)\nNúmero de apartamentos: (indicar cantidad)\nEmpresa: (indicar empresa)`,
+          )}
+          target="_blank"
+          rel="noopener"
+        >
+          Solicitar Cotización
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const msgs = document.querySelectorAll('.hero-msg');
+    if (msgs.length > 0) {
+      const chosen = Math.floor(Math.random() * msgs.length);
+      msgs.forEach((el, idx) => {
+        (el as HTMLElement).style.display = idx === chosen ? 'block' : 'none';
+      });
+    }
+  </script>
+
+  <!-- Apartamentos preview -->
+  <Reveal>
+    <section class="section apartamentos-preview">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Nuestros Apartamentos</span>
+          <h2>Todo lo que necesitas en un solo lugar</h2>
+          <p>
+            Apartamentos completos con 2 habitaciones, 2 baños privados, cocina equipada,
+            sala de estar, Wi-Fi de alta disponibilidad, aire acondicionado y SimpleTV en cada habitación.
+          </p>
+        </div>
+
+        <div class="apt-preview-grid">
+          <div class="apt-preview-item apt-preview-main">
+            <img
+              src={hab1Img.src}
+              srcset={hab1Img.attributes.srcset}
+              width={hab1Img.attributes.width}
+              height={hab1Img.attributes.height}
+              alt="Habitación principal con cama Queen en Aparto-Hotel Florencia"
+              loading="lazy"
+            />
+          </div>
+          <div class="apt-preview-item">
+            <img
+              src={cocinaImg.src}
+              srcset={cocinaImg.attributes.srcset}
+              width={cocinaImg.attributes.width}
+              height={cocinaImg.attributes.height}
+              alt="Cocina equipada con nevera y cocina eléctrica del apartamento"
+              loading="lazy"
+            />
+          </div>
+          <div class="apt-preview-item">
+            <img
+              src={hab2Img.src}
+              srcset={hab2Img.attributes.srcset}
+              width={hab2Img.attributes.width}
+              height={hab2Img.attributes.height}
+              alt="Habitación con camas matrimoniales en Aparto-Hotel Florencia"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <div class="apt-preview-features">
+          <ul>
+            <li>Cocina eléctrica de 2 hornillas, nevera, cafetera y utensilios completos</li>
+            <li>Televisor con SimpleTV en cada habitación</li>
+            <li>Wi-Fi de alta disponibilidad</li>
+            <li>Aire acondicionado y agua caliente</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--space-xl);">
+          <a class="btn btn-secondary" href="/apartamentos/">Ver más detalles y galería</a>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <!-- Seguridad -->
+  <Reveal>
+    <section class="section section-security">
+      <div class="container">
+        <div class="security-grid">
+          <div class="security-text">
+            <span class="eyebrow">Infraestructura de Seguridad</span>
+            <h2>Tranquilidad garantizada</h2>
+            <p>
+              Nuestras instalaciones cuentan con la infraestructura necesaria para garantizar
+              una estadía de confianza: vigilancia las 24 horas, sistema de cámaras de seguridad,
+              cercado eléctrico perimetral y planta eléctrica de respaldo.
+            </p>
+          </div>
+          <div class="security-img">
+            <img
+              src={hotel2Img.src}
+              srcset={hotel2Img.attributes.srcset}
+              width={hotel2Img.attributes.width}
+              height={hotel2Img.attributes.height}
+              alt="Exteriores y perímetro vigilado del Aparto-Hotel Florencia en Güiria, Estado Sucre"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <!-- Salón de reuniones -->
+  <Reveal>
+    <section class="section section-salon">
+      <div class="container salon-layout">
+        <div class="salon-text">
+          <span class="eyebrow">Salón Corporativo</span>
+          <h2>Espacio para reuniones<br />de hasta 50 personas</h2>
+          <p>
+            Salón de reuniones con capacidad para 50 asistentes, ideal para actividades
+            corporativas, capacitaciones y reuniones de proyecto. Atención personalizada
+            para su evento.
+          </p>
+          <a class="btn btn-secondary" href="/servicios/">Ver servicios</a>
+        </div>
+        <div class="salon-img">
+          <img
+            src={salonImg.src}
+            srcset={salonImg.attributes.srcset}
+            width={salonImg.attributes.width}
+            height={salonImg.attributes.height}
+            alt="Salón de reuniones corporativo con capacidad para 50 personas en Aparto-Hotel Florencia"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <!-- FAQ rápido -->
+  <Reveal>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Preguntas Frecuentes</span>
+          <h2>Resolvemos sus dudas</h2>
+        </div>
+
+        <div class="home-faq-grid">
+          <div class="home-faq-item">
+            <h3>¿Cuál es la capacidad máxima por apartamento?</h3>
+            <p>Cada apartamento tiene capacidad para máximo 4 personas, con 2 habitaciones y 2 baños privados.</p>
+          </div>
+          <div class="home-faq-item">
+            <h3>¿Hay planta eléctrica de respaldo?</h3>
+            <p>Sí. Contamos con planta eléctrica propia para garantizar continuidad de servicios durante cortes de energía.</p>
+          </div>
+          <div class="home-faq-item">
+            <h3>¿Ofrecen servicio de alimentación?</h3>
+            <p>Sí, ofrecemos servicio de alimentación previa solicitud para huéspedes corporativos.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-xl); text-align: center;">
+          <a class="btn btn-secondary" href="/faq/">Ver todas las preguntas frecuentes</a>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <!-- CTA final -->
+  <Reveal>
+    <CtaFinal />
+  </Reveal>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: clamp(70vh, 80vh, 88vh);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      oklch(0.18 0.01 40 / 0.82) 0%,
+      oklch(0.18 0.01 40 / 0.55) 50%,
+      oklch(0.18 0.01 40 / 0.15) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 42rem;
+    padding-block: var(--space-4xl);
+    color: var(--color-surface);
+  }
+
+  .eyebrow-light {
+    color: oklch(0.9 0.04 80);
+  }
+
+  .eyebrow-light::before {
+    background: oklch(0.9 0.04 80);
+  }
+
+  .hero-content h1 {
+    font-size: var(--step-5);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-top: var(--space-lg);
+    color: var(--color-surface);
+  }
+
+  .hero-content h1 strong {
+    font-weight: 700;
+    color: var(--color-surface);
+  }
+
+  .hero-sub {
+    margin-top: var(--space-lg);
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.55;
+    max-width: 34rem;
+    color: oklch(0.92 0.01 80);
+  }
+
+  .hero-ctas {
+    margin-top: var(--space-xl);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .btn-hero {
+    padding: 0.95rem 2.2rem;
+    font-size: 1.08rem;
+  }
+
+  .btn-hero-outline {
+    border: 1.5px solid var(--color-surface);
+    color: var(--color-surface);
+    background: transparent;
+    padding: 0.95rem 2.2rem;
+    font-size: 1.08rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s var(--ease-out-expo), color 0.2s var(--ease-out-expo);
+  }
+
+  .btn-hero-outline:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  /* Apartamentos preview */
+  .apt-preview-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .apt-preview-main {
+    grid-column: 1 / -1;
+  }
+
+  .apt-preview-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-border);
+  }
+
+  .apt-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .apt-preview-main img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .apt-preview-item:not(.apt-preview-main) img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .apt-preview-features {
+    margin-top: var(--space-xl);
+  }
+
+  .apt-preview-features ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .apt-preview-features li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    line-height: 1.4;
+  }
+
+  .apt-preview-features li::before {
+    content: '✓';
+    color: var(--color-secondary);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .apt-preview-features ul {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .security-text {
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .section-security {
+    background: var(--color-secondary);
+    color: var(--color-surface);
+  }
+
+  .section-security .eyebrow {
+    color: oklch(0.8 0.04 90);
+  }
+
+  .section-security .eyebrow::before {
+    background: oklch(0.8 0.04 90);
+  }
+
+  .section-security h2 {
+    color: var(--color-surface);
+  }
+
+  .section-security p {
+    color: oklch(0.88 0.01 90);
+  }
+
+  .security-grid {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .security-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .security-img {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .security-img img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  /* Salon */
+  .salon-layout {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .salon-layout {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .salon-text {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+
+  .salon-img {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .salon-img img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+
+
+  /* FAQ grid */
+  .home-faq-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .home-faq-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .home-faq-item {
+    padding: var(--space-xl);
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .home-faq-item h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+  }
+
+  .home-faq-item p {
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    line-height: 1.55;
+  }
+</style>

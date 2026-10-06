@@ -1,0 +1,374 @@
+---
+import Base from '../layouts/Base.astro';
+import Reveal from '../components/Reveal.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../data/site';
+import { getImage } from 'astro:assets';
+import imgSalon from '../assets/hotel_salon.webp';
+import imgTerraza from '../assets/hotel_terraza.webp';
+import imgComedor1 from '../assets/hotel_terraza_comedor_1.webp';
+import imgComedor2 from '../assets/hotel_terraza_comedor_2.webp';
+
+const salonImg = await getImage({ src: imgSalon, widths: [800, 1400], formats: ['webp'] });
+const terrazaImg = await getImage({ src: imgTerraza, widths: [600, 1000], formats: ['webp'] });
+const comedor1Img = await getImage({ src: imgComedor1, widths: [600, 1000], formats: ['webp'] });
+const comedor2Img = await getImage({ src: imgComedor2, widths: [600, 1000], formats: ['webp'] });
+
+const securityItems = [
+  {
+    icon: 'ShieldCheck',
+    title: 'Vigilancia 24 horas',
+    desc: 'Personal de vigilancia permanente y sistema de cámaras de seguridad en todo el predio.',
+  },
+  {
+    icon: 'Zap',
+    title: 'Planta eléctrica',
+    desc: 'Planta eléctrica de respaldo para garantizar la continuidad de los servicios ante cortes de energía.',
+  },
+  {
+    icon: 'Lock',
+    title: 'Cercado eléctrico perimetral',
+    desc: 'Perímetro protegido con cercado eléctrico para resguardar a los huéspedes y sus bienes.',
+  },
+  {
+    icon: 'House',
+    title: 'Estacionamiento privado',
+    desc: 'Estacionamiento privado dentro de las instalaciones para todos los huéspedes.',
+  },
+];
+
+const additionalServices = [
+  {
+    icon: 'Utensils',
+    title: 'Alimentación',
+    desc: 'Servicio de alimentación disponible previa solicitud para huéspedes y actividades corporativas.',
+  },
+  {
+    icon: 'RefreshCw',
+    title: 'Lavandería',
+    desc: 'Servicio de lavandería según requerimiento, con costo adicional.',
+  },
+];
+---
+
+<Base
+  title="Servicios en Güiria"
+  description="Servicios del Aparto-Hotel Florencia en Güiria: salón de reuniones para 50 personas, alimentación, lavandería y seguridad 24 horas con planta eléctrica."
+  canonicalPath="/servicios/"
+  crumbs={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Servicios' },
+  ]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Servicios &amp; Salón</span>
+      <h1>Infraestructura y servicios</h1>
+      <p>
+        Del salón de reuniones a la alimentación, pasando por el estacionamiento y vigilancia
+        las 24 horas: todo lo que necesita para una cómoda estadía en Güiria.
+      </p>
+    </div>
+  </section>
+
+  <Reveal>
+    <section class="section section-salon" id="salon">
+      <div class="container service-block">
+        <div class="service-media">
+          <img
+            src={salonImg.src}
+            srcset={salonImg.attributes.srcset}
+            width={salonImg.attributes.width}
+            height={salonImg.attributes.height}
+            alt="Salón de reuniones con capacidad para 50 personas en Aparto-Hotel Florencia"
+            loading="eager"
+          />
+        </div>
+        <div class="service-copy">
+          <span class="eyebrow">Salón de reuniones</span>
+          <h2>Capacidad para 50 personas</h2>
+          <p>
+            Espacio ideal para capacitaciones, reuniones de proyecto y actividades corporativas.
+            Atención preparada para recibir a su equipo completo.
+          </p>
+          <div class="service-cta">
+            <a
+              class="btn btn-primary"
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, me gustaría información sobre el salón de reuniones del Aparto-Hotel Florencia (capacidad 50 personas).')}`}
+              target="_blank"
+              rel="noopener"
+            >
+              Cotizar el salón
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-gallery-salon">
+      <div class="container">
+        <div class="galeria-mini">
+          <figure>
+            <img
+              src={terrazaImg.src}
+              srcset={terrazaImg.attributes.srcset}
+              width={terrazaImg.attributes.width}
+              height={terrazaImg.attributes.height}
+              alt="Pasillo de terraza que conecta el comedor y el salón de reuniones del Aparto-Hotel Florencia"
+              loading="lazy"
+            />
+            <figcaption>Terraza de acceso al comedor y al salón</figcaption>
+          </figure>
+          <figure>
+            <img
+              src={comedor1Img.src}
+              srcset={comedor1Img.attributes.srcset}
+              width={comedor1Img.attributes.width}
+              height={comedor1Img.attributes.height}
+              alt="Comedor del Aparto-Hotel Florencia con servicio de alimentación para huéspedes"
+              loading="lazy"
+            />
+            <figcaption>Comedor del hotel</figcaption>
+          </figure>
+          <figure>
+            <img
+              src={comedor2Img.src}
+              srcset={comedor2Img.attributes.srcset}
+              width={comedor2Img.attributes.width}
+              height={comedor2Img.attributes.height}
+              alt="Espacio de comedor y alimentación del Aparto-Hotel Florencia en Güiria"
+              loading="lazy"
+            />
+            <figcaption>Servicio de alimentación para el personal</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section" id="servicios-adicionales">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Servicios adicionales</span>
+          <h2>Extras que facilitan la estadía</h2>
+        </div>
+        <div class="additional-grid">
+          {
+            additionalServices.map((s) => (
+              <div class="additional-item">
+                <Icon name={s.icon} size={28} label={s.title} />
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-security" id="seguridad">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Seguridad e infraestructura</span>
+          <h2>Medidas pensadas para su tranquilidad</h2>
+        </div>
+        <div class="security-grid">
+          {
+            securityItems.map((s) => (
+              <div class="security-item">
+                <Icon name={s.icon} size={28} label={s.title} />
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <CtaFinal />
+  </Reveal>
+</Base>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl);
+    background: linear-gradient(to bottom, oklch(0.97 0.012 80), oklch(0.965 0.01 80)),
+      var(--color-surface);
+  }
+
+  .page-hero h1 {
+    font-size: var(--step-4);
+    text-wrap: balance;
+    margin-top: var(--space-md);
+  }
+
+  .page-hero p {
+    margin-top: var(--space-lg);
+    font-size: var(--text-lg);
+    color: var(--color-text-soft);
+    max-width: 56ch;
+  }
+
+  .service-block {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+/* First section (salón) */
+  .section-salon {
+    padding-block: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .section-salon {
+      padding-block: var(--space-2xl);
+    }
+  }
+
+  .service-block {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+
+  .service-media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+
+  .service-copy h2 {
+    font-size: var(--step-3);
+  }
+
+  .service-copy p {
+    color: var(--color-text-soft);
+  }
+
+  .galeria-mini {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .galeria-mini {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .galeria-mini figure {
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-border);
+    aspect-ratio: 4 / 3;
+  }
+
+  .galeria-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .galeria-mini figcaption {
+    padding: var(--space-sm) var(--space-sm) var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    background: var(--color-surface);
+  }
+
+  .additional-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .additional-item,
+  .security-item {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-strong);
+  }
+
+  .additional-item svg,
+  .security-item svg {
+    color: var(--color-primary);
+  }
+
+  .additional-item h3,
+  .security-item h3 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .additional-item p,
+  .security-item p {
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    line-height: 1.5;
+  }
+
+  .section-security {
+    background: var(--color-secondary);
+    color: var(--color-surface);
+  }
+
+  .section-security h2,
+  .section-security h3 {
+    color: var(--color-surface);
+  }
+
+  .section-security .eyebrow {
+    color: oklch(0.8 0.04 90);
+  }
+
+  .section-security .eyebrow::before {
+    background: oklch(0.8 0.04 90);
+  }
+
+  .section-security p {
+    color: oklch(0.88 0.01 90);
+  }
+
+  .section-security .security-item {
+    background: oklch(0.34 0.05 130 / 0.5);
+    border-color: oklch(0.5 0.05 130 / 0.5);
+  }
+
+  .section-security .security-item svg {
+    color: oklch(0.78 0.05 90);
+  }
+
+  .security-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+</style>

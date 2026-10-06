@@ -1,0 +1,259 @@
+---
+import Icon from './Icon.astro';
+import { SITE } from '../data/site';
+
+const servicesFooter = [
+  { label: 'Apartamentos', href: '/apartamentos/' },
+  { label: 'Salón de reuniones', href: '/servicios/#salon' },
+  { label: 'Alimentación y lavandería', href: '/servicios/#servicios-adicionales' },
+  { label: 'Seguridad 24 horas', href: '/servicios/#seguridad' },
+];
+
+const links = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Apartamentos', href: '/apartamentos/' },
+  { label: 'Servicios', href: '/servicios/' },
+  { label: 'Preguntas Frecuentes', href: '/faq/' },
+  { label: 'Contacto y Ubicación', href: '/contacto/' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-name">{SITE.name}</p>
+      <p class="footer-tag">{SITE.tagline}</p>
+      <p class="footer-rif">RIF {SITE.rif}</p>
+      <a href={SITE.mapsUrl} class="footer-address" target="_blank" rel="noopener noreferrer">
+        <Icon name="MapPin" size={18} />
+        {SITE.addressShort}
+      </a>
+    </div>
+
+    <nav class="footer-col" aria-label="Enlaces del sitio">
+      <p class="footer-heading">Explorar</p>
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="footer-col" aria-label="Servicios">
+      <p class="footer-heading">Servicios</p>
+      <ul>
+        {
+          servicesFooter.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer-col footer-contact">
+      <p class="footer-heading">Contacto</p>
+      <ul>
+        <li>
+          <a href={`tel:${SITE.phoneTel}`}>
+            <Icon name="Phone" size={16} />
+            {SITE.phoneDisplay}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${SITE.emails.reservas}`}>
+            <Icon name="Mail" size={16} />
+            {SITE.emails.reservas}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${SITE.emails.general}`}>
+            <Icon name="Mail" size={16} />
+            {SITE.emails.general}
+          </a>
+        </li>
+        <li>
+          <a href={SITE.social.instagram} target="_blank" rel="noopener noreferrer">
+            <Icon name="Instagram" size={16} />
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a href={SITE.social.facebook} target="_blank" rel="noopener noreferrer">
+            <Icon name="Facebook" size={16} />
+            Facebook
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© {new Date().getFullYear()} {SITE.legalName}. Todos los derechos reservados.</p>
+      <div class="footer-legal">
+        <a href="/politica-de-privacidad/">Política de Privacidad</a>
+      </div>
+      <p class="footer-developer">
+        Desarrollado por <a href="https://fercho2908.github.io/Portfolio" target="_blank" rel="noopener noreferrer">Fernando Figuera</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-secondary-deep);
+    color: oklch(0.9 0.01 90);
+    margin-top: var(--space-3xl);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: var(--space-2xl);
+    padding-block: var(--space-3xl);
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    max-width: 28rem;
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    color: var(--color-surface);
+    margin: 0;
+  }
+
+  .footer-tag {
+    color: oklch(0.85 0.01 90);
+  }
+
+  .footer-rif {
+    font-size: var(--text-sm);
+    color: oklch(0.75 0.02 90);
+  }
+
+  .footer-address {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: oklch(0.85 0.01 90);
+    text-decoration: none;
+    padding-top: var(--space-xs);
+  }
+
+  .footer-address:hover {
+    color: var(--color-surface);
+  }
+
+
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .footer-col a {
+    color: oklch(0.85 0.01 90);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .footer-col a:hover {
+    color: var(--color-surface);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  :global(.footer-col a svg) {
+    flex: none;
+  }
+
+  .footer-heading {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: oklch(0.7 0.02 90);
+    margin: 0 0 var(--space-md);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid oklch(0.5 0.02 120 / 0.4);
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--space-md);
+    padding-block: var(--space-lg);
+    font-size: var(--text-sm);
+    color: oklch(0.75 0.02 90);
+  }
+
+  .footer-bottom-inner p {
+    margin: 0;
+    max-width: none;
+  }
+
+  .footer-legal a {
+    color: oklch(0.75 0.02 90);
+    text-decoration: none;
+  }
+
+  .footer-legal a:hover {
+    color: var(--color-surface);
+    text-decoration: underline;
+  }
+
+  .footer-developer a {
+    color: oklch(0.85 0.01 90);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer-developer a:hover {
+    color: var(--color-surface);
+    text-decoration: underline;
+  }
+
+  @media (min-width: 1024px) {
+    .footer-bottom-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr 1.4fr;
+    }
+  }
+</style>

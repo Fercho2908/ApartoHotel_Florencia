@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+
+<Base
+  title="Política de Privacidad"
+  description="Política de privacidad del Aparto-Hotel Florencia, C.A.: tratamiento de datos de contacto, cotizaciones y reservas de servicio de alojamiento."
+  canonicalPath="/politica-de-privacidad/"
+  crumbs={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Política de Privacidad' },
+  ]}
+>
+  <section class="legal-hero">
+    <div class="container">
+      <span class="eyebrow">Legal</span>
+      <h1>Política de Privacidad</h1>
+      <p class="legal-date">Última actualización: {new Date().toLocaleDateString('es-VE', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+    </div>
+  </section>
+
+  <section class="legal-body">
+    <div class="container legal-container">
+      <article>
+        <h2>1. Responsable del tratamiento</h2>
+        <p>
+          Aparto-Hotel Florencia, C.A., con RIF {SITE.rif}, domiciliada en {SITE.address},
+          es la responsable del tratamiento de los datos personales que nos suministre a
+          través de este sitio web, conforme a lo establecido en la normativa venezolana
+          sobre protección de datos personales.
+        </p>
+
+        <h2>2. Datos que recopilamos</h2>
+        <p>
+          A través de los formularios de cotización y contacto de este sitio podemos
+          recopilar los siguientes datos personales:
+        </p>
+        <ul>
+          <li>Nombre de la empresa y del contacto.</li>
+          <li>Número de teléfono y correo electrónico.</li>
+          <li>Información de la solicitud: noches estimadas, número de apartamentos y necesidades adicionales.</li>
+        </ul>
+
+        <h2>3. Finalidad del tratamiento</h2>
+        <p>Sus datos serán utilizados exclusivamente para:</p>
+        <ul>
+          <li>Gestionar sus solicitudes de cotización y reservas de servicio de alojamiento.</li>
+          <li>Responder a sus consultas a través de WhatsApp, teléfono o correo electrónico.</li>
+          <li>Brindar información sobre disponibilidad y tarifas.</li>
+        </ul>
+
+        <h2>4. Base legal</h2>
+        <p>
+          El tratamiento de sus datos se fundamenta en su consentimiento, el cual otorga
+          al completar y enviar los formularios de este sitio, y en la relación
+          precontractual o contractual de alojamiento.
+        </p>
+
+        <h2>5. Comunicación de datos</h2>
+        <p>
+          No compartimos, vendemos ni cedemos sus datos personales a terceros, salvo
+          obligación legal. La comunicación de sus datos a través de WhatsApp se produce
+          contra el número oficial de la empresa.
+        </p>
+
+        <h2>6. Conservación</h2>
+        <p>
+          Conservaremos sus datos únicamente durante el tiempo necesario para cumplir las
+          finalidades descritas, o mientras exista una obligación legal de conservarlos.
+        </p>
+
+        <h2>7. Derechos de los titulares</h2>
+        <p>
+          Usted puede ejercer sus derechos de acceso, rectificación, actualización y
+          supresión de sus datos, así como oponerse a su tratamiento, escribiéndonos a
+          {SITE.emails.reservas} o por WhatsApp al {SITE.phoneDisplay}.
+        </p>
+
+        <h2>8. Seguridad</h2>
+        <p>
+          Aplicamos medidas técnicas y organizativas apropiadas para proteger sus datos
+          personales contra accesos no autorizados, pérdida o alteración.
+        </p>
+
+        <h2>9. Contacto</h2>
+        <p>
+          Para cualquier consulta relativa a esta política, puede comunicarse con nosotros
+          a través de los canales indicados en la sección de contacto de este sitio web.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-hero {
+    padding-block: var(--space-3xl);
+    background: linear-gradient(to bottom, oklch(0.97 0.012 80), oklch(0.965 0.01 80)),
+      var(--color-surface);
+  }
+
+  .legal-hero h1 {
+    font-size: var(--step-4);
+    margin-top: var(--space-md);
+  }
+
+  .legal-date {
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+  }
+
+  .legal-body {
+    padding-block: var(--space-3xl);
+  }
+
+  .legal-container {
+    max-width: 44rem;
+  }
+
+  article {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  article h2 {
+    font-size: var(--step-2);
+    color: var(--color-text);
+    margin-top: var(--space-lg);
+  }
+
+  article p {
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  article ul {
+    margin: 0;
+    padding-left: var(--space-xl);
+    color: var(--color-text-soft);
+    display: grid;
+    gap: var(--space-xs);
+  }
+</style>

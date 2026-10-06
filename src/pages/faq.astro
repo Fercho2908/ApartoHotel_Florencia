@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+import Reveal from '../components/Reveal.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+const faqItems = [
+  {
+    question: '¿Cuál es la capacidad máxima por apartamento?',
+    answer:
+      'Cada apartamento tiene capacidad para un máximo de 4 personas, distribuida en 2 habitaciones privadas. Cada habitación cuenta con su baño privado.',
+  },
+  {
+    question: '¿Qué servicios de seguridad ofrece el hotel?',
+    answer:
+      'Contamos con vigilancia las 24 horas, sistema de cámaras de seguridad y cercado eléctrico perimetral. También disponemos de estacionamiento privado dentro de las instalaciones.',
+  },
+  {
+    question: '¿Hay planta eléctrica de respaldo?',
+    answer:
+      'Sí. El hotel cuenta con una planta eléctrica propia que garantiza la continuidad de los servicios, importante para las operaciones corporativas y el trabajo remoto durante cortes de energía.',
+  },
+  {
+    question: '¿Existen tarifas especiales para proyectos de larga duración?',
+    answer:
+      'Sí. Ofrecemos tarifas preferenciales adaptadas para proyectos de larga duración y reservas múltiples. Solicite su cotización y le prepararemos una propuesta a la medida de su operación.',
+  },
+  {
+    question: '¿Ofrecen servicio de comedor o alimentación?',
+    answer:
+      'Sí, ofrecemos servicio de alimentación previa solicitud para los huéspedes. El comedor se encuentra en la terraza del hotel, con espacio para el personal de la empresa.',
+  },
+  {
+    question: '¿Hay salón para actividades corporativas?',
+    answer:
+      'Sí. Disponemos de un salón de reuniones con capacidad para 50 personas, preparado para capacitaciones, reuniones de proyecto y actividades corporativas con atención dedicada.',
+  },
+  {
+    question: '¿Qué contiene la cocina del apartamento?',
+    answer:
+      'La cocina está equipada con cocina eléctrica de 2 hornillas, nevera, cafetera y utensilios de cocina completos, para que el personal prepare sus alimentos con comodidad.',
+  },
+  {
+    question: '¿Hay servicio de lavandería?',
+    answer:
+      'Sí, ofrecemos servicio de lavandería según requerimiento, con costo adicional. Consulte disponibilidad al momento de la reserva.',
+  },
+  {
+    question: '¿Cómo puedo hacer una reserva?',
+    answer:
+      'Puede solicitar su cotización directamente por WhatsApp al +58 414-3942088, por correo a reservas@apartohotelflorencia.com, o completando el formulario de contacto de este sitio.',
+  },
+];
+---
+
+<Base
+  title="Preguntas Frecuentes"
+  description="Preguntas frecuentes del Aparto-Hotel Florencia en Güiria: capacidad por apartamento, seguridad, planta eléctrica, comedor y salón de reuniones."
+  canonicalPath="/faq/"
+  crumbs={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Preguntas Frecuentes' },
+  ]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Preguntas Frecuentes</span>
+      <h1>Respuestas para planificar su estadía</h1>
+      <p>
+        Las dudas más comunes sobre capacidad, seguridad, planta eléctrica,
+        comedor y salón de reuniones.
+      </p>
+    </div>
+  </section>
+
+  <Reveal>
+    <section class="section section-faq">
+      <div class="container faq-container">
+        <FaqAccordion items={faqItems} />
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <CtaFinal />
+  </Reveal>
+</Base>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl);
+    background: linear-gradient(to bottom, oklch(0.97 0.012 80), oklch(0.965 0.01 80)),
+      var(--color-surface);
+  }
+
+  .page-hero h1 {
+    font-size: var(--step-4);
+    max-width: 20ch;
+    margin-top: var(--space-md);
+  }
+
+  .page-hero p {
+    margin-top: var(--space-lg);
+    font-size: var(--text-lg);
+    color: var(--color-text-soft);
+    max-width: 56ch;
+  }
+
+  .faq-container {
+    display: grid;
+    gap: var(--space-2xl);
+    max-width: 48rem;
+  }
+
+  .section-faq {
+    padding-top: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .section-faq {
+      padding-top: var(--space-2xl);
+    }
+  }
+</style>

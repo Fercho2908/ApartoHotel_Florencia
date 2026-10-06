@@ -1,0 +1,361 @@
+---
+import Base from '../layouts/Base.astro';
+import Reveal from '../components/Reveal.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Icon from '../components/Icon.astro';
+import { getImage } from 'astro:assets';
+import imgHab1 from '../assets/hotel_habitacion_1.webp';
+import imgHab2 from '../assets/hotel_habitacion_2.webp';
+import imgHab4 from '../assets/hotel_habitacion_4.webp';
+import imgCocina from '../assets/hotel_cocina_1.webp';
+import imgSala1 from '../assets/hotel_sala_1.webp';
+import imgSala2 from '../assets/hotel_sala_2_editada.webp';
+
+const gallery = [
+  {
+    src: imgHab1,
+    alt: 'Habitación principal con cama Queen en Aparto-Hotel Florencia, servicio de alojamiento en Güiria',
+    caption: 'Habitación principal con cama Queen',
+  },
+  {
+    src: imgHab2,
+    alt: 'Habitación secundaria con dos camas matrimoniales en Aparto-Hotel Florencia',
+    caption: 'Comodidad y privacidad en cada habitación',
+  },
+  {
+    src: imgHab4,
+    alt: 'Detalle de habitación con baño privado en Aparto-Hotel Florencia',
+    caption: 'Habitación con dos camas matrimoniales',
+  },
+  {
+    src: imgSala1,
+    alt: 'Sala de estar amoblada del apartamento en Aparto-Hotel Florencia',
+    caption: 'Sala de estar amoblada',
+  },
+  {
+    src: imgSala2,
+    alt: 'Sala de estar con televisor y Wi-Fi de alta disponibilidad del apartamento en Aparto-Hotel Florencia',
+    caption: 'Espacio para descansar y trabajar',
+  },
+  {
+    src: imgCocina,
+    alt: 'Cocina equipada con nevera, cocina eléctrica y utensilios en Aparto-Hotel Florencia',
+    caption: 'Cocina totalmente equipada',
+  },
+];
+
+const images = await Promise.all(
+  gallery.map((g) => getImage({ src: g.src, widths: [600, 1200], formats: ['webp'] })),
+);
+
+const equipment = [
+  {
+    icon: 'Droplets',
+    title: '2 baños privados',
+    desc: 'Uno en cada habitación, para privacidad total del equipo.',
+  },
+  {
+    icon: 'Utensils',
+    title: 'Cocina equipada',
+    desc: 'Cocina eléctrica de 2 hornillas, nevera, cafetera y utensilios completos.',
+  },
+  {
+    icon: 'Armchair',
+    title: 'Sala de estar amoblada',
+    desc: 'Sofá y espacio confortable para descanso y convivencia.',
+  },
+  {
+    icon: 'Monitor',
+    title: 'Televisor con SimpleTV',
+    desc: 'Servicio SimpleTV en cada habitación del apartamento.',
+  },
+  {
+    icon: 'Wifi',
+    title: 'Wi-Fi de alta disponibilidad',
+    desc: 'Conexión estable para el trabajo remoto del personal.',
+  },
+  {
+    icon: 'Snowflake',
+    title: 'Aire acondicionado',
+    desc: 'Clima controlado para descansar en el calor de Güiria.',
+  },
+  {
+    icon: 'Zap',
+    title: 'Agua caliente',
+    desc: 'Servicio continuo de agua caliente en baños y cocina.',
+  },
+  {
+    icon: 'Users',
+    title: 'Capacidad hasta 4 personas',
+    desc: 'Distribución para equipos de trabajo: 1 cama Queen + 2 camas matrimoniales.',
+  },
+];
+---
+
+<Base
+  title="Apartamentos Equipados en Güiria"
+  description="Conozca los apartamentos totalmente equipados del Aparto-Hotel Florencia en Güiria: 2 habitaciones, 2 baños privados, cocina, Wi-Fi y aire acondicionado."
+  canonicalPath="/apartamentos/"
+  crumbs={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Apartamentos' },
+  ]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Apartamentos &amp; Infraestructura</span>
+      <h1>Apartamentos diseñados para su comodidad</h1>
+      <p>
+        Dos habitaciones, dos baños, cocina equipada y servicios pensados para una estadía
+        de confort en Güiria, Estado Sucre.
+      </p>
+    </div>
+  </section>
+
+  <Reveal>
+    <section class="section section-gallery">
+      <div class="container">
+        <div class="gallery">
+          {
+            gallery.map((g, i) => (
+              <figure class:list={['gallery-item', i === 0 ? 'gallery-featured' : '']}>
+                <img
+                  src={images[i].src}
+                  srcset={images[i].attributes.srcset}
+                  width={images[i].attributes.width}
+                  height={images[i].attributes.height}
+                  alt={g.alt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+                <figcaption>
+                  <span>{g.caption}</span>
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-distribution">
+      <div class="container">
+        <div class="distribution-grid">
+          <div>
+            <span class="eyebrow">Distribución</span>
+            <h2>Espacio para el descanso</h2>
+          </div>
+          <div class="distribution-list">
+            <div class="distribution-row">
+              <div>
+                <h3>2 habitaciones privadas</h3>
+                <p>Una con cama Queen y una con 2 camas matrimoniales.</p>
+              </div>
+              <div>
+                <h3>2 baños privados</h3>
+                <p>Uno en cada habitación, para máxima independencia.</p>
+              </div>
+              <div>
+                <h3>Capacidad máxima: 4 personas</h3>
+                <p>Hasta 4 personas por apartamento, con total comodidad.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <section class="section section-equipment">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Equipamiento</span>
+          <h2>Todo lo necesario para su estadía</h2>
+        </div>
+        <div class="equipment-grid">
+          {
+            equipment.map((e) => (
+              <div class="equipment-item">
+                <Icon name={e.icon} size={28} label={e.title} />
+                <h3>{e.title}</h3>
+                <p>{e.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </Reveal>
+
+  <Reveal>
+    <CtaFinal />
+  </Reveal>
+</Base>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl);
+    background: linear-gradient(to bottom, oklch(0.97 0.012 80), oklch(0.965 0.01 80)),
+      var(--color-surface);
+  }
+
+  .page-hero h1 {
+    font-size: var(--step-4);
+    text-wrap: balance;
+    margin-top: var(--space-md);
+  }
+
+  .page-hero p {
+    margin-top: var(--space-lg);
+    font-size: var(--text-lg);
+    color: var(--color-text-soft);
+    max-width: 56ch;
+  }
+
+  /* Gallery */
+  .section-gallery {
+    padding-block: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .section-gallery {
+      padding-block: var(--space-2xl);
+    }
+  }
+
+  .gallery {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-item {
+    margin: 0;
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-border);
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .gallery-item figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+    background: linear-gradient(to top, oklch(0.2 0.01 40 / 0.85), transparent);
+    color: var(--color-surface);
+    font-weight: 500;
+    font-size: var(--text-base);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+  }
+
+  .gallery-item:hover figcaption,
+  .gallery-item:focus-within figcaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 640px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Distribution */
+  .section-distribution {
+    background: var(--color-surface);
+    padding-top: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .section-distribution {
+      padding-top: var(--space-2xl);
+    }
+  }
+
+  .distribution-grid {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  @media (min-width: 768px) {
+    .distribution-grid {
+      grid-template-columns: 1fr 1.4fr;
+    }
+  }
+
+  .distribution-row {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .distribution-row h3 {
+    font-size: var(--text-lg);
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .distribution-row p {
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .distribution-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Equipment */
+  .section-equipment {
+    background: var(--color-surface-strong);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .equipment-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .equipment-item {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .equipment-item svg {
+    color: var(--color-primary);
+  }
+
+  .equipment-item h3 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .equipment-item p {
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+    line-height: 1.5;
+  }
+</style>

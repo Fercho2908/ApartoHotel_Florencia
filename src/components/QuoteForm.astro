@@ -1,0 +1,274 @@
+---
+import Icon from './Icon.astro';
+import { SITE, whatsappLink } from '../data/site';
+
+const formId = Astro.props.formId ?? 'cotizacion';
+const formElId = `cotizacion-form-${formId}`;
+const whatsappNumber = SITE.whatsapp;
+---
+
+<form id={formElId} class="quote-form" novalidate>
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="empresa">Empresa <span class="req">*</span></label>
+      <input
+        type="text"
+        id="empresa"
+        name="empresa"
+        required
+        autocomplete="organization"
+        placeholder="Nombre de la empresa"
+      />
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="contacto">Nombre del contacto <span class="req">*</span></label>
+      <input
+        type="text"
+        id="contacto"
+        name="contacto"
+        required
+        autocomplete="name"
+        placeholder="Nombre completo"
+      />
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono <span class="req">*</span></label>
+      <input
+        type="tel"
+        id="telefono"
+        name="telefono"
+        required
+        autocomplete="tel"
+        placeholder="+58 412-1234567"
+      />
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo electrónico</label>
+      <input
+        type="email"
+        id="correo"
+        name="correo"
+        autocomplete="email"
+        placeholder="correo@empresa.com"
+      />
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="noches">Noches estimadas <span class="req">*</span></label>
+      <input
+        type="number"
+        id="noches"
+        name="noches"
+        required
+        min="1"
+        max="365"
+        placeholder="Ej: 15"
+      />
+      <span class="helper-text">Tarifa por volumen: $140 (1–7), $130 (8–30), $120 (+30)</span>
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="apartamentos">Apartamentos requeridos <span class="req">*</span></label>
+      <input
+        type="number"
+        id="apartamentos"
+        name="apartamentos"
+        required
+        min="1"
+        max="20"
+        placeholder="Ej: 3"
+      />
+      <span class="helper-text">Máximo 4 personas por apartamento</span>
+      <span class="field-error" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group form-full">
+      <label for="mensaje">Información adicional</label>
+      <textarea
+        id="mensaje"
+        name="mensaje"
+        rows="3"
+        placeholder="Fechas aproximadas, necesidades especiales, servicios adicionales (alimentación, lavandería)..."
+      ></textarea>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-whatsapp btn-lg submit-btn">
+    <Icon name="MessageCircle" size={20} />
+    Enviar por WhatsApp
+  </button>
+
+  <div id={`form-success-${formId}`} class="form-success" hidden aria-live="polite">
+    <Icon name="Check" size={20} />
+    <p>Mensaje enviado. Se abrirá WhatsApp con los datos de su cotización.</p>
+  </div>
+</form>
+
+<script define:vars={{ formElId, formId, whatsappNumber }}>
+  const form = document.getElementById(formElId);
+  if (!form) throw new Error('Form not found');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+
+    // Basic validation
+    let valid = true;
+    form.querySelectorAll('[required]').forEach((input) => {
+      const errorEl = input.parentElement && input.parentElement.querySelector('.field-error');
+      if (!input.value.trim()) {
+        errorEl && (errorEl.textContent = 'Este campo es obligatorio');
+        input.classList.add('is-invalid');
+        valid = false;
+      } else {
+        errorEl && (errorEl.textContent = '');
+        input.classList.remove('is-invalid');
+      }
+    });
+
+    // Email validation if provided
+    const emailInput = form.querySelector('#correo');
+    if (emailInput.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+      const errorEl = emailInput.parentElement && emailInput.parentElement.querySelector('.field-error');
+      errorEl && (errorEl.textContent = 'Ingrese un correo válido');
+      emailInput.classList.add('is-invalid');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    const msg = `Hola, estoy interesado en una cotización para Aparto-Hotel Florencia.
+
+Empresa: ${data.empresa || 'No especificada'}
+Contacto: ${data.contacto || 'No especificado'}
+Teléfono: ${data.telefono}
+Correo: ${data.correo || 'No especificado'}
+Noches estimadas: ${data.noches || 'No especificado'}
+Apartamentos requeridos: ${data.apartamentos || 'No especificado'}
+${data.mensaje ? `\nInformación adicional:\n${data.mensaje}` : ''}`;
+
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+
+    document.getElementById(`form-success-${formId}`) && document.getElementById(`form-success-${formId}`).removeAttribute('hidden');
+  });
+
+  // Clear error on input
+  form.querySelectorAll('[required]').forEach((input) => {
+    input.addEventListener('input', () => {
+      const errorEl = input.parentElement && input.parentElement.querySelector('.field-error');
+      if (input.value.trim()) {
+        errorEl && (errorEl.textContent = '');
+        input.classList.remove('is-invalid');
+      }
+    });
+  });
+</script>
+
+<style>
+  .quote-form {
+    display: grid;
+    gap: var(--space-xl);
+    max-width: 42rem;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .form-full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .form-group {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  label {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  .req {
+    color: var(--color-danger);
+  }
+
+  input,
+  textarea {
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-strong);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    transition: border-color 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo);
+    min-height: 48px;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px oklch(0.54 0.13 43 / 0.12);
+  }
+
+  .is-invalid {
+    border-color: var(--color-danger) !important;
+  }
+
+  .field-error {
+    font-size: var(--text-sm);
+    color: var(--color-danger);
+    min-height: 1.1em;
+  }
+
+  .helper-text {
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+  }
+
+  .submit-btn {
+    justify-self: start;
+    padding: 0.9rem 2rem;
+    font-size: 1.05rem;
+  }
+
+  .form-success {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: oklch(0.95 0.04 150);
+    border: 1px solid oklch(0.7 0.08 150);
+    border-radius: var(--radius-md);
+    color: oklch(0.3 0.08 150);
+  }
+
+  .form-success[hidden] {
+    display: none;
+  }
+
+  .form-success p {
+    margin: 0;
+    max-width: none;
+    font-weight: 500;
+  }
+</style>

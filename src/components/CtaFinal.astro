@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import { SITE, whatsappLink } from '../data/site';
+---
+
+<section class="cta-final">
+  <div class="container cta-final-inner">
+    <h2>Solicite su cotización hoy</h2>
+    <p>Cuéntenos sus necesidades y enviamos una propuesta adaptada.</p>
+    <div class="cta-final-actions">
+      <a
+        class="btn btn-whatsapp"
+        href={whatsappLink('Hola, estoy interesado en una cotización para Aparto-Hotel Florencia.')}
+        target="_blank"
+        rel="noopener"
+      >
+        <Icon name="MessageCircle" size={20} label="WhatsApp" />
+        Solicitar Cotización por WhatsApp
+      </a>
+      <a class="btn cta-call" href={`tel:${SITE.phoneTel}`}>
+        <Icon name="Phone" size={20} label="Llamar" />
+        Llamar: {SITE.phoneDisplay}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    background: var(--color-primary);
+    color: var(--color-surface);
+    margin-top: var(--space-3xl);
+  }
+
+  .cta-final-inner {
+    padding-block: var(--space-3xl);
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-lg);
+  }
+
+  .cta-final h2 {
+    font-size: var(--step-4);
+    color: var(--color-surface);
+  }
+
+  .cta-final p {
+    font-size: var(--text-lg);
+    color: oklch(0.92 0.02 60);
+    max-width: 40ch;
+    margin: 0;
+  }
+
+  .cta-final .btn-whatsapp {
+    padding: 0.95rem 2.2rem;
+    font-size: 1.08rem;
+    box-shadow: 0 6px 20px oklch(0.2 0.04 130 / 0.35);
+  }
+
+  .cta-call {
+    border: 1.5px solid var(--color-surface);
+    color: var(--color-surface);
+    background: transparent;
+    padding: 0.95rem 2.2rem;
+    font-size: 1.08rem;
+  }
+
+  .cta-call:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .cta-final-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+</style>

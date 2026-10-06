@@ -1,0 +1,21 @@
+{
+  "name": "apartohotel-florencia",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/figtree": "^5.1.1",
+    "@fontsource-variable/source-serif-4": "^5.1.1",
+    "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}
