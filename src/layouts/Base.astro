@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Analytics from '@vercel/analytics/astro';
 import { getImage } from 'astro:assets';
 import previewFile from '../assets/preview.png';
 import '../styles/global.css';
@@ -81,5 +82,6 @@ const fullTitle = canonicalPath === '/' ? title : `${title} · ${SITE.name}`;
     </main>
     <Footer />
     <StickyCTA />
+    <Analytics />
   </body>
 </html>
